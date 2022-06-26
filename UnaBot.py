@@ -24,25 +24,26 @@ async def on_member_join(member):
 
 @bot.command(name='unahelp')
 async def unahelp(ctx):
-    response = "Try !rd 5W6"
+    response = "Try !rd 5w6"
     await ctx.send(response) 
 
 
     
 @bot.command(name="rd")
-async def rollDice(ctx):
-    response = DiceHandler.handleDiceRequest(ctx.message.content)
+async def rollDice(ctx,arg):
+    #print(ctx.author)
+    #print(ctx.command)
+    #print(ctx.args)
+    #print(arg)
+    response = DiceHandler.handleDiceRequest(arg)
     await ctx.send(response) 
-    #for elem in ctx.args:
-    #    print (elem)    
-    
-        
-    
+
+ 
         
 @bot.listen()
 async def on_member_update(before, after):
-    #if before.status == after.status:
-    #    return
+    if before.status == after.status:
+        return
     print(str(before.joined_at)) # Uhrzeit wann Member gejoint ist
     print(str(before.activities)) # Seine Aktivitäten
     print(str(before.guild)) # Der Server

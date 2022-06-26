@@ -36,17 +36,13 @@ def handleDiceRequest(param):
         String: String to use for the discord bot
     """
     
-    if not param.startswith("!rd "):
-        return "Sorry, not '!rd' command."
+    param = param.upper()
     
-    dice_command = param.replace("!rd ","").strip().upper()    
-    
-    x = re.search(r"^[-+]?[0-9]+W[-+]?[0-9]+$", dice_command)
-    if x == None:
+    if re.search(r"^[-+]?[0-9]+W[-+]?[0-9]+$", param) == None:
         return "Something like '!rd 5w6' would be okay"
     
     
-    parts = dice_command.split("W")        
+    parts = param.split("W")        
     if len(parts) < 2 or len(parts) > 2: 
         return "I don't understand"
     
