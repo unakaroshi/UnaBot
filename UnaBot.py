@@ -2,8 +2,8 @@
 import os
 
 from discord.ext import commands
-import random
-import MessageHandler
+
+import DiceHandler
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -24,65 +24,17 @@ async def on_member_join(member):
 
 @bot.command(name='unahelp')
 async def unahelp(ctx):
-    response = "Try !gotquote"
+    response = "Try !rd 5W6"
     await ctx.send(response) 
 
-@bot.command(name='gotquote')
-async def gotquote(ctx):
-    response = MessageHandler.generateQuote()
-    await ctx.send(response) 
+
     
 @bot.command(name="rd")
 async def rollDice(ctx):
+    response = DiceHandler.handleDiceRequest(ctx.message.content)
+    await ctx.send(response) 
     #for elem in ctx.args:
     #    print (elem)    
-    parts = ctx.message.content.split()
-    if len(parts) != 2:
-        await ctx.send("I don't understand")
-        return
-    
-    param = parts[1].upper()        
-    parts = param.split("W")
-    
-    
-    
-        
-    if len(parts) < 2 or len(parts) > 2: 
-        await ctx.send("I don't understand")
-        return
-    
-    dice_number = int(parts[0])
-    dice_sides = int(parts[1])
-        
-    
-    if (dice_number < 1) or (dice_number > 100):
-      await ctx.send("Yeah, try to bug me. (Only Dicenumbers between 1 and 100, please")  
-      return
-  
-    if (dice_sides < 3):
-      await ctx.send("How the f... can you build a {} sided dice? Try better next time.".format(dice_sides))
-      return
-    
-    if (dice_sides > 100):
-      await ctx.send("How many sides does your dice have? Are you Alex?")  
-      return
-  
-    if dice_number == 1:
-      await ctx.send("Your result is: {}".format(random.randrange(1,dice_sides)))
-      return
-    
-    result = 0
-    response = "Rolling {} dices...\n\n".format(dice_number)
-    for i in range(0,dice_number):
-        number =  random.randrange(1,dice_sides)
-        response += "{:2d}. Dice: {:3d}\n".format(i+1, number)
-        
-        result = result + number
-      
-    response += "--------------\n"
-    response += "Total: {:5d}".format(result)
-    print (response)    
-    await ctx.send(response) 
     
         
     
