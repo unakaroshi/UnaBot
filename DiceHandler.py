@@ -77,21 +77,20 @@ def handleDiceRequest(param):
     
     
 if __name__ == "__main__":
-    print ("Mainfile")
-    
+     
     commands = [
-        "!rd 5w6",
-        "!rd 5W6",
-        "!rd  5W6 ",
-        "!rd 5W6 ",
-        "!rd 5W6",
-        "!rd 5 W6",
-        "!rd 5W 6",
-        "!rd 5 W 6 ",
-        "!rd 5d6",
-        "!rd 100w100",
-        "!rd -1w6",
-        "!rd 5w1000",
+        "5w6",
+        "5W6",
+        " 5W6 ",
+        "5W6 ",
+        "5W6",
+        "5 W6",
+        "5W 6",
+        "5 W 6 ",
+        "5d6",
+        "100w100",
+        "-1w6",
+        "5w1000",
         ]
     
     for cmd in commands: 
