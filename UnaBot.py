@@ -58,7 +58,11 @@ async def rollDice(ctx,arg):
     await ctx.send(embed=embed)
     #await ctx.send(response) 
 
- 
+@bot.command(name="ase")
+async def ASE(ctx,arg):
+    difficult = int(int(arg)/2)
+    extrem = int(int(arg)/5)
+    await ctx.send("Schwer: {}   Extrem: {}".format(difficult, extrem))
         
 @bot.listen()
 async def on_member_update(before, after):
