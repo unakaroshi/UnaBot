@@ -1,7 +1,8 @@
 # UnaBot.py
 import os
-
+import discord
 from discord.ext import commands
+#from discord.ext import discord
 
 import DiceHandler
 from dotenv import load_dotenv
@@ -31,12 +32,31 @@ async def unahelp(ctx):
     
 @bot.command(name="rd")
 async def rollDice(ctx,arg):
-    #print(ctx.author)
-    #print(ctx.command)
-    #print(ctx.args)
-    #print(arg)
-    response = DiceHandler.handleDiceRequest(arg)
-    await ctx.send(response) 
+    
+    available_dice_sides = [4,6,8,10,12,20,100]
+    
+    dice_number, dice_sides = DiceHandler.parseRollCommand(arg)
+    if dice_number == 0 or dice_sides == 0:
+        await ctx.send("Error parsing command. Try **!rd 5w6**")
+        return
+    
+    if dice_number < 0 or dice_sides < 0:        
+        await ctx.send("No negative numbers!")
+        return
+    
+    if dice_number > 100:
+        await ctx.send("A maximum on 100 dices is allowed!")
+        return 
+    
+    if dice_sides not in available_dice_sides:
+        await ctx.send("Only D4, D6, D8, D10, D12, D20 and D100 are allowed")
+        return;
+    
+    response = DiceHandler.handleDiceRequest(dice_number, dice_sides)
+    dice_name = "D{}".format(dice_sides)
+    embed=discord.Embed(title="{} rolls {} {}".format(ctx.author.display_name, dice_number, dice_name), description=response, color=0x22A7F0)
+    await ctx.send(embed=embed)
+    #await ctx.send(response) 
 
  
         
