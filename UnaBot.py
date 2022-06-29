@@ -79,7 +79,7 @@ async def rollDice(ctx,arg):
     dicerolls = DiceHandler.rollDices(dice_number, dice_sides)
     dice_name = "D{}".format(dice_sides)
     embed=discord.Embed(title="{} rolls {} {}".format(ctx.author.display_name, dice_number, dice_name), 
-                        description=", ".join(str(elem) for elem in dicerolls), 
+                        description="{}\n============\n**Total: {}**".format(", ".join(str(elem) for elem in dicerolls), sum(dicerolls)),
                         color=0x22A7F0)
     
     await ctx.send(embed=embed)
