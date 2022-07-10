@@ -130,3 +130,6 @@ dmypy.json
 
 #VSCode
 .vscode/
+
+# Gcloud Service Account Key
+gcloud_access.json
