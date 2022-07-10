@@ -11,7 +11,7 @@ In order to add commands you will need to do 2 steps:
 - deploy the cloud function code
 
 ### Registering commands
-Check out the [scripts](/scripts/) directory. There you will find the script to register your function.
+Check out the [scripts](/scripts/) directory. There you will find the script to register your function.  
 Essentially this will post an HTTP call to the Discord API to make your command known.
 
 ### Deploying the code
