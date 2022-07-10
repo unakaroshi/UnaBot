@@ -23,7 +23,7 @@ async def rollDice():
 
     TOKEN = os.getenv('DISCORD_TOKEN')
     #webhook
-    https://discord.com/api/webhooks/990623027320483890/aarUd4_oer-m4hpNAuKkJAudYdbM5iPfmLy7YEeBHh5QxG42PJ3DV8f3AX5_9ZdrsY0I
+    
     
     bot = commands.Bot(command_prefix='!')
 
