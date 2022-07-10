@@ -7,6 +7,7 @@ from google.cloud import logging
 from nacl.signing import VerifyKey
 from nacl.exceptions import BadSignatureError
 from flask import abort
+import command_runner
 
 
 # Decouple Cloud Function event handler from bot-specific code
@@ -61,9 +62,12 @@ def unabot(request):
   # add option to reply to ping (Discord endpoints requirement 2)
   if payload['type'] == 1:
     return {"type": 1}
-  
+  else:
+    # run a command
+    return command_runner.runCommand(payload)
   # add other slash commands
-  if payload['data']['name'] == 'foo':
-    # do help action
-    return {"type": 4, "data": {"content": "No rest for the wicked!"}}
+
+  # if payload['data']['name'] == 'foo':
+  #   # do help action
+  #   return {"type": 4, "data": {"content": "No rest for the wicked!"}}
     
