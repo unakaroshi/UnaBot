@@ -28,7 +28,9 @@ def runCommand(request):
   # commands = {
   #   #"foo": {"type": 4, "data": {"content": "No rest for the wicked!"}}
   #   "foo": Dimport("module", com, request)
-  # } 
+  # }
+   
+  print("Loading command: " + com)
 
   commandModule = import_module("commands."+com)
   comResponse = getattr(commandModule, "respond")
