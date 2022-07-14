@@ -12,29 +12,43 @@ This script is NOT uploaded to Google Cloud, instead it needs to be run locally 
 """
 
 import requests
+import os, sys
 from google.cloud import secretmanager
+from importlib import import_module
+
+currentdir = os.path.dirname(os.path.realpath(__file__))
+parentdir = os.path.dirname(currentdir)
+sys.path.append(parentdir)
 
 # init GCLOUD Secrets Manager
 secrets = secretmanager.SecretManagerServiceClient()
 BOT_TOKEN = secrets.access_secret_version(request={"name": "projects/571203715515/secrets/CatLoverBotToken/versions/1"}).payload.data.decode("utf-8")
 APP_ID = secrets.access_secret_version(request={"name": "projects/571203715515/secrets/CatLoverDiscordBotAppID/versions/1"}).payload.data.decode("utf-8")
 GUILD_ID = secrets.access_secret_version(request={"name": "projects/571203715515/secrets/BotdevdebugServerID/versions/1"}).payload.data.decode("utf-8")
+GUILD_ID = "298087737834340352"
 
 url = "https://discord.com/api/v8/applications/" + APP_ID + "/guilds/" + GUILD_ID + "/commands"
-print(url)
 headers = {
    "Authorization": "Bot " + BOT_TOKEN,
    "Content-Type": "application/json"
 }
 
-print(headers)
+# command_data = {
+#    "name": "foo",
+#    "type": 1,
+#    "description": "replies with bar ;/",
+# }
+    
+path_of_the_directory= '../commands'
 
-command_data = {
-   "name": "foo",
-   "type": 1,
-   "description": "replies with bar ;/",
-}
+for filename in os.listdir(path_of_the_directory):
+    f = os.path.join(path_of_the_directory,filename)
+    if os.path.isfile(f) and filename != "__init__.py":
+      commandModule = import_module("commands."+filename.split(".")[0])
+      comResponse = getattr(commandModule, "register")
 
-x = requests.post(url, json = command_data, headers = headers)
-print(x.text)
+      command_data = comResponse()
+      #print(command_data)
+      x = requests.post(url, json = command_data, headers = headers)
+      print(x.text)
 
