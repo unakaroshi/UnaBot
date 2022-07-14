@@ -6,5 +6,5 @@ def register():
   return {
    "name": "foo",
    "type": 1,
-   "description": "replies with bar ;/",
+   "description": "'No rest for the wicked!' - just a simply debug command...",
 }
