@@ -7,8 +7,15 @@ from dotenv import load_dotenv
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
-
-bot = commands.Bot(command_prefix='!')
+intents = discord.Intents.default()
+intents.guilds=True
+intents.members=True
+intents.presences=True
+intents.messages=True
+intents.guild_messages=True
+#intents = discord.Intents( guilds=True,members=True,presences=True)
+#intents.
+bot = commands.Bot(command_prefix='!', intents=intents)
 
 
 
@@ -55,31 +62,26 @@ async def unahelp(ctx):
 
     
 @bot.command(name="rd")
-async def rollDice(ctx,arg):
+async def rollDice(ctx, arg = None):
     
     available_dice_sides = [4,6,8,10,12,20,100]
     
     dice_number, dice_sides = DiceHandler.parseRollCommand(arg)
-    if dice_number == 0 or dice_sides == 0:
-        await ctx.send("Error parsing command. Try **!rd 5w6**")
-        return
-    
-    if dice_number < 0 or dice_sides < 0:        
-        await ctx.send("No negative numbers!")
-        return
-    
-    if dice_number > 100:
-        await ctx.send("A maximum on 100 dices is allowed!")
-        return 
     
     if dice_sides not in available_dice_sides:
         await ctx.send("Only D4, D6, D8, D10, D12, D20 and D100 are allowed")
         return
     
     dicerolls = DiceHandler.rollDices(dice_number, dice_sides)
-    dice_name = "D{}".format(dice_sides)
+    dice_name = "D{}".format(dice_sides)    
+    if dice_number == 1:
+        desc = "You've rolled **{}**".format(sum(dicerolls))
+    else:
+        desc = "{}\n============\n**Total: {}**".format(", ".join(str(elem) for elem in dicerolls), sum(dicerolls))        
+                                                        
+        
     embed=discord.Embed(title="{} rolls {} {}".format(ctx.author.display_name, dice_number, dice_name), 
-                        description="{}\n============\n**Total: {}**".format(", ".join(str(elem) for elem in dicerolls), sum(dicerolls)),
+                        description=desc,
                         color=0x22A7F0)
     
     await ctx.send(embed=embed)
@@ -93,17 +95,26 @@ async def ASE(ctx,arg):
         
         
 @bot.listen()
-async def on_member_update(before, after):
-    if before.status == after.status:
+async def on_member_update(before, after):   
+    
+    if before.status == after.status                          \
+            or before.desktop_status == discord.Status.online \
+            or before.web_status == discord.Status.online     \
+            or before.mobile_status == discord.Status.online:
         return
-    print(str(before.joined_at)) # Uhrzeit wann Member gejoint ist
-    print(str(before.activities)) # Seine Aktivitäten
-    print(str(before.guild)) # Der Server
-    print(str(before.nick))# Nicknames
-    print(str(before.mobile_status)) # der Mobile Status
-    print(str(before.desktop_status)) # der Desktop Status
-    print(str(before.web_status)) # Der Web Status
-    print(str(before.roles)) # Die Rolle 
+    
+    if after.desktop_status == discord.Status.online          \
+            or after.web_status == discord.Status.online      \
+            or after.mobile_status == discord.Status.online:
+                
+        embed=discord.Embed(title="Hello, **{}**.\r\n".format(after.name), 
+                        description="Type **!unahelp** to get help.",
+                        color=0x22A7F0)    
+        
+        await after.create_dm()
+        await after.dm_channel.send(embed=embed)
+       
+  
      
 bot.run(TOKEN)
 
