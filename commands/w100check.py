@@ -1,5 +1,4 @@
 import random
-import json
 import math
 
 def respond(event):
@@ -23,7 +22,7 @@ def respond(event):
         difficulty = opt['value']
 
   # roll the dice
-  roll = random.randint(1,101)
+  roll = random.randint(1,100)
   adjusted_threshold = math.ceil(int(threshold) / int(difficulty))
   
   if threshold != None:
