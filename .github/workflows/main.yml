@@ -1,0 +1,43 @@
+name: Deploy to CatLoverBot GCloud
+on:
+  push:
+    branches:
+    - serverless-dev
+
+jobs:
+  job_id:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - id: auth
+      uses: google-github-actions/auth@v0
+      with:
+        workload_identity_provider: 
+        service_account: 'my-service-account@my-project.iam.gserviceaccount.com'
+    - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v0
+        with:
+          workload_identity_provider: 'projects/571203715515/locations/global/workloadIdentityPools/catloverbot-cicd/providers/catlover-cicd-provider'
+          service_account: 'catloversecretsreader@catloverdiscordbot.iam.gserviceaccount.com'
+          token_format: 'access_token'
+          access_token_lifetime: '300s'
+
+    - id: 'deploy'
+      uses: 'google-github-actions/deploy-cloud-functions@v0'
+      with:
+        name: 'unabot'
+        runtime: 'python38'
+        env_vars: "DISCORD_PUBLIC_KEY=a056e9ff70bbc873609120ad7bdff33bf1ade9ce2ce588306b95e24b0db6c8c7"
+        region: "europe-west3"
+
+    # Example of using the output
+    - id: 'test'
+      run: 'curl "${{ steps.deploy.outputs.url }}"'
+
+
