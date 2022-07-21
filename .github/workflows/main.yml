@@ -19,7 +19,7 @@ jobs:
       uses: google-github-actions/auth@v0
       with:
         workload_identity_provider: 'projects/571203715515/locations/global/workloadIdentityPools/catloverbot-cicd/providers/catlover-cicd-provider'
-        service_account: 'catloversecretsreader@catloverdiscordbot.iam.gserviceaccount.com'
+        service_account: 'catloverbotdeployer@catloverdiscordbot.iam.gserviceaccount.com'
         token_format: 'access_token'
         access_token_lifetime: '300s'
 
