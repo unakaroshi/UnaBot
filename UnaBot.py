@@ -94,25 +94,25 @@ async def ASE(ctx,arg):
     await ctx.send("Schwer: {}   Extrem: {}".format(difficult, extrem))
         
         
-@bot.listen()
-async def on_member_update(before, after):   
+#@bot.listen()
+#async def on_member_update(before, after):   
     
-    if before.status == after.status                          \
-            or before.desktop_status == discord.Status.online \
-            or before.web_status == discord.Status.online     \
-            or before.mobile_status == discord.Status.online:
-        return
+ #   if before.status == after.status                          \
+ #           or before.desktop_status == discord.Status.online \
+ #           or before.web_status == discord.Status.online     \
+ #           or before.mobile_status == discord.Status.online:
+#      return
     
-    if after.desktop_status == discord.Status.online          \
-            or after.web_status == discord.Status.online      \
-            or after.mobile_status == discord.Status.online:
+ #   if after.desktop_status == discord.Status.online          \
+ #           or after.web_status == discord.Status.online      \
+ #           or after.mobile_status == discord.Status.online:
                 
-        embed=discord.Embed(title="Hello, **{}**.\r\n".format(after.name), 
-                        description="Type **!unahelp** to get help.",
-                        color=0x22A7F0)    
+ #       embed=discord.Embed(title="Hello, **{}**.\r\n".format(after.name), 
+ #                       description="Type **!unahelp** to get help.",
+ #                       color=0x22A7F0)    
         
-        await after.create_dm()
-        await after.dm_channel.send(embed=embed)
+ #       await after.create_dm()
+ #       await after.dm_channel.send(embed=embed)
        
   
      
