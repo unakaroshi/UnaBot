@@ -1,6 +1,5 @@
-import functions_framework
+#import functions_framework
 #from discord.ext import commands
-import json
 import os
 #from helpers import request_verification
 from google.cloud import logging
@@ -13,7 +12,7 @@ import command_runner
 # Decouple Cloud Function event handler from bot-specific code
 # Discord endpoint requirements: https://discord.com/developers/docs/interactions/receiving-and-responding#receiving-an-interaction
 
-@functions_framework.http
+#@functions_framework.http
 def unabot(request):
 
   # Instantiates a client
