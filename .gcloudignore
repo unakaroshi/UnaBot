@@ -14,3 +14,11 @@
 .gitignore
 debug.py
 scripts/
+# avoid deploying the access creds file
+*.json
+# don't deploy vscode settings
+.vscode/
+# ignore markdown files
+*.md
+# ignore github workflow files
+.github/  
