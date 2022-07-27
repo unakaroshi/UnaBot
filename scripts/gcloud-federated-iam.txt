@@ -1,0 +1,25 @@
+Setup Federated IAM using the Github JWT provider
+
+gcloud iam workload-identity-pools create "catloverbot-cicd" \
+  --project="catloverdiscordbot" \
+  --location="global" \
+  --display-name="CatLoverBot CICD Pool"
+
+gcloud iam workload-identity-pools providers create-oidc "catlover-cicd-provider" \
+  --project="catloverdiscordbot" \
+  --location="global" \
+  --workload-identity-pool="catloverbot-cicd" \
+  --display-name="CatLover CICD Provider" \
+  --attribute-mapping="google.subject=assertion.sub,attribute.actor=assertion.actor,attribute.aud=assertion.aud" \
+  --issuer-uri="https://token.actions.githubusercontent.com"
+
+gcloud iam service-accounts add-iam-policy-binding "catloversecretsreader@catloverdiscordbot.iam.gserviceaccount.com" \
+--project="catloverdiscordbot" \
+--role="roles/iam.workloadIdentityUser" \
+--member="principalSet://iam.googleapis.com/projects/571203715515/locations/global/workloadIdentityPools/catloverbot-cicd/attribute.repository/unakaroshi/UnaBot"
+
+gcloud iam workload-identity-pools providers describe "catlover-cicd-provider" \
+  --project="catloverdiscordbot" \
+  --location="global" \
+  --workload-identity-pool="catloverbot-cicd" \
+  --format="value(name)"
