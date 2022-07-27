@@ -1,6 +1,4 @@
 import random
-import json
-import math
 
 def respond(event):
   print(event)
