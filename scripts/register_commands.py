@@ -24,10 +24,9 @@ sys.path.append(parentdir)
 secrets = secretmanager.SecretManagerServiceClient()
 BOT_TOKEN = secrets.access_secret_version(request={"name": "projects/571203715515/secrets/CatLoverBotToken/versions/1"}).payload.data.decode("utf-8")
 APP_ID = secrets.access_secret_version(request={"name": "projects/571203715515/secrets/CatLoverDiscordBotAppID/versions/1"}).payload.data.decode("utf-8")
-GUILD_ID = secrets.access_secret_version(request={"name": "projects/571203715515/secrets/BotdevdebugServerID/versions/1"}).payload.data.decode("utf-8")
-GUILD_ID = "298087737834340352"
 
-url = "https://discord.com/api/v8/applications/" + APP_ID + "/guilds/" + GUILD_ID + "/commands"
+url = "https://discord.com/api/v10/applications/" + APP_ID + "/commands"
+
 headers = {
    "Authorization": "Bot " + BOT_TOKEN,
    "Content-Type": "application/json"
