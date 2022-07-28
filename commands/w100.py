@@ -1,8 +1,9 @@
 import random
 
 def respond(event):
-  print("w100 Command reached!")
-  return {"type": 4, "data": {"content": "You rolled: " + str(random.randint(1,101))}}
+  #roll the dice
+  roll = random.randint(1,100)
+  return {"type": 4, "data": {"content": "You rolled: " + str(roll)}}
 
 def register():
   return {

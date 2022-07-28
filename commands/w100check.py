@@ -21,7 +21,8 @@ def respond(event):
         # adjust difficulty
         difficulty = opt['value']
 
-  # roll the dice
+  
+  #roll the dice
   roll = random.randint(1,100)
   adjusted_threshold = math.ceil(int(threshold) / int(difficulty))
   

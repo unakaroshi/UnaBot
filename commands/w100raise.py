@@ -14,13 +14,13 @@ def respond(event):
         threshold = opt['value']
 
   # roll the dice
-  roll = random.randint(1,101)
-  
+  roll = random.randint(1,100)
+    
   if threshold != None:
     # divide roll result with difficulty rating and compare to threshold
     if roll >= threshold:
       result = "**SUCCESS!**\n"
-      result += "You earned **" + str(random.randint(1,11)) + "** points!"
+      result += "You earned **" + str(random.randint(1,10)) + "** points!"
     else:
       result = "**FAIL!**\n"    
   else:
